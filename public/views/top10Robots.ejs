@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Top Selling Models</title>
+    <style>
+      body {
+        font-family: "Nunito", sans-serif;
+        background-color: #ffffff;
+        margin: 0;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh; /* Заменено height на min-height */
+        overflow-x: hidden;
+      }
+      h1 {
+        margin-left: 25%;
+      }
+      table {
+        border-collapse: collapse;
+        margin-left: 25%;
+        width: 50%;
+      }
+
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+
+      th {
+        background-color: #f2f2f2;
+      }
+
+      tbody {
+        counter-reset: rowNumber;
+      }
+
+      tbody tr {
+        counter-increment: rowNumber;
+      }
+
+      tbody tr td:first-child::before {
+        content: counter(rowNumber);
+        min-width: 1em;
+        margin-right: 0.5em;
+      }
+
+      #topMenu {
+        background-color: #333;
+        width: 100%;
+        padding: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      #topMenu a {
+        color: white;
+        text-decoration: none;
+        font-size: 18px;
+        margin: 0 10px;
+      } 
+    </style>
+  </head>
+  <body>
+    <div id="topMenu">
+      <div>
+        <a href="mainpage">Главная</a>
+        <a href="catalog">Каталог</a>
+      </div>
+      <div class="admin-only" style="display: none;">
+        <a href="top10Robots">Отчет Топ 10</a>
+        <a href="sellsReportTipe">Отчет объем продаж</a>
+      </div>
+      <a href="profile">Профиль</a>
+    </div>
+    <h1>Топ 10</h1>
+    <table id="topModelsTable">
+      <thead>
+        <tr>
+          <th>№</th>
+          <th>Модель</th>
+          <th>Количество продаж</th>
+        </tr>
+      </thead>
+      <tbody id="topModelsList"></tbody>
+    </table>
+    <script>
+
+document.addEventListener("DOMContentLoaded", () => {
+        const storedToken = localStorage.getItem("token");
+
+        if (storedToken) {
+          console.log("Токен:", storedToken);
+
+          // Раскодируем токен, чтобы получить данные пользователя
+          try {
+            const decodedToken = JSON.parse(atob(storedToken.split(".")[1]));
+            if (decodedToken && decodedToken.login === "admin") {
+              const adminOnlyLinks = document.querySelectorAll(".admin-only");
+              adminOnlyLinks.forEach((link) => {
+                link.style.display = "block";
+                link.addEventListener("click", openModal);
+              });
+
+              // Закрытие модального окна при клике на крестик
+              const closeButton = document.querySelector(".close");
+              closeButton.addEventListener("click", closeModal);
+            }
+          } catch (error) {
+            console.error("Ошибка при декодировании токена:", error);
+          }
+        } else {
+          console.log("Токен не найден в локальном хранилище.");
+        }
+      });
+      document.addEventListener("DOMContentLoaded", function () {
+        // Функция для получения данных от сервера
+        function fetchData() {
+          fetch("/topSellingModels")
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error(
+                  `Network response was not ok: ${response.statusText}`
+                );
+              }
+              return response.json();
+            })
+            .then((data) => displayData(data))
+            .catch((error) => console.error("Error:", error.message));
+        }
+
+        // Функция для отображения данных на странице в виде таблицы
+        function displayData(response) {
+          const topModelsList = document.getElementById("topModelsList");
+          const models = response.recordset || [];
+
+          models.forEach((model, index) => {
+            const row = topModelsList.insertRow();
+
+            const cellNames = ["model_name", "purchase_count"];
+
+            // Добавляем столбец с нумерацией
+            const indexCell = row.insertCell();
+            indexCell.textContent;
+
+            cellNames.forEach((cellName) => {
+              const cell = row.insertCell();
+              cell.textContent = model[cellName];
+            });
+          });
+        }
+
+        // Вызываем функцию для получения данных при загрузке страницы
+        fetchData();
+      });
+    </script>
+  </body>
+</html>

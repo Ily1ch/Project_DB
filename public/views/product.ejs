@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="/styles/product.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous" ></script>
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.1.0/uicons-regular-rounded/css/uicons-regular-rounded.css" />
+    <title>Страница продукта</title>
+    <style>
+      /* Стили для иконки */
+
+      /* Стили для ссылки */
+      .cardOrders {
+        transition: transform 0.3s ease;
+        text-decoration: none;
+        color: rgb(83, 83, 83);
+      }
+
+      /* Добавляем стили для анимации при наведении */
+      .cardOrders:hover {
+        transform: scale(1.2); /* Увеличиваем размер при наведении */
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="topMenu">
+      <div>
+        <a href="mainpage">Главная</a>
+        <a href="catalog">Каталог</a>
+      </div>
+      <a href="profile">Профиль</a>
+    </div>
+    <a class="editbuttonAdmineOnly" title="Редактировать продукт" href="#"
+      ><i class="far fa-edit"></i
+    ></a>
+    <div id="productDetails"></div>
+    <a href="" class="cardOrders">Добавить в карзину<i class="fi fi-rr-shopping-cart" style="font-size: xx-large;"></i></a>
+    <p style="font-size: 10pt;">Хотите добавить в каризину нужное вам количество? Нажмите столько раз сколько вам нужно</p>
+    <div style="height: 100px; color: white">____</div>
+    <script src="/scripts/product.js"></script>
+    <script>
+      
+    </script>
+  </body>
+</html>

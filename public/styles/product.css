@@ -1,0 +1,196 @@
+body {
+    font-family: "Nunito", sans-serif;
+    background-color: #ffffff;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    overflow-x: hidden;
+    flex: 1;
+  }
+
+  #topMenu {
+    background-color: #333;
+    width: 100%;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  #topMenu a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    margin: 0 10px;
+  }
+  .MainHeader{
+     width: 100%;
+  }
+  #productDetails {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    flex: 1;
+    border: 1px solid rgb(201, 201, 201);
+    background-color: #e8e8e8;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.841);
+    border-radius: 15px;
+  }
+  #productDetails p {
+    margin: 0;
+    transition: background-color 0.3s; 
+    padding-left: 10px;
+    border-radius: 10px;
+    margin-top: 7px;
+    margin-left: 45%;
+  }
+
+  #productDetails h2 {
+    text-align: center;
+  }
+
+  .MainHeader {
+    width: 100%;
+    text-align: center;
+  }
+
+  .product {
+    display: flex;
+    border: 1px solid rgb(201, 201, 201);
+    background-color: #e8e8e8;
+    border-radius: 5px;
+    padding: 1em;
+    margin-bottom: 20px;
+    
+    transition: 0.3s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.841);
+  }
+
+  .product:hover {
+    transition: 0.25s;
+    transform: scale(1.01);
+    background-color: #cecece;
+  }
+
+  .product-info p {
+    margin: 0;
+  }
+
+  .product-image {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-right: 1em;
+    border-color: #333;
+  }
+
+  .product-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 500px;
+    text-wrap: wrap;
+  }
+
+  .product-info h2 {
+    text-wrap: stable;
+  }
+
+.imgAndInfo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+  .price-and-button {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 20px;
+    flex-direction: row;
+  }
+
+  .price-and-button p {
+    margin-top: 5px;
+    margin-right: 35%;
+  }
+
+  .button28 {
+    padding: 0.5em 1em;
+    font-size: 100%;
+    font-weight: 300px;
+    text-align: center;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    text-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    background-color: #ffc400;
+    border-radius: 8px;
+    transition: 0.4s ease;
+  }
+
+  .button28:hover {
+    transition: 0.4s ease;
+    background-color: #dd9612;
+    border-radius: 14px;
+  }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #737373;
+  transition: 0.25s;
+}
+
+td:hover{
+  background-color: #d7cfcf;
+  transition: 0.25s;
+}
+
+th {
+  background-color: #bfbfbf;
+  border: 1px solid #6c6c6c;
+}
+
+.info-table h3,
+.main-table h3 {
+  margin-bottom: 10px;
+  font-size: 1.5em;
+}
+
+.info-table {
+  flex: 1;
+  padding: 0 20px;
+}
+
+.main-table {
+  flex: 1;
+  padding: 0 20px;
+}
+
+.editbuttonAdmineOnly {
+  display: none;
+  text-decoration: none;
+  color: rgb(83, 83, 83);
+  margin-top: 25px;
+  margin-right: 25px;
+  align-self: flex-end;
+  font-size: xx-large;
+  transition: 0.3s;
+}
+.editbuttonAdmineOnly:hover{
+  color: rgb(17,17,17);
+  transform: scale(1.1);
+  transition: 0.3s;
+}

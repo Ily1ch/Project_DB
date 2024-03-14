@@ -1,0 +1,87 @@
+body {
+  /* font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; */
+  /* font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; */
+  font-family: 'Nunito', sans-serif;
+  background-color: #ffffff;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  overflow-x: hidden;
+  flex: 1;
+}
+
+a {
+  color: #454545;
+  text-decoration: none;
+  font-weight: bold;
+  margin-top: 10px; 
+  display: inline-block; 
+}
+
+a:hover {
+  text-decoration: none;
+  color: black;
+}
+
+  .registration-form {
+    border: 1px solid rgb(201, 201, 201);
+    background-color: #e8e8e8;
+    margin-top: 3%;;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.318);
+    width: 300px;
+    text-align: center;
+  }
+
+  .registration-form h2 {
+    color: #333;
+  }
+
+  .registration-form label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+    text-align: left;
+  }
+
+  .registration-form input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: 0.4s ease;
+  }
+
+  .registration-form input:focus {
+    outline: none;
+    background-color: #ccc;
+    transform: scale(1.05);
+    transition: 0.4s ease;
+  }
+
+  .registration-form button {
+    padding: 0.5em 1em;
+    font-size: 100%;
+    font-weight: 300px;
+    text-align: center;
+    border:none;
+    margin-top: 15px;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    text-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    background-color: #ffc400;
+    border-radius: 8px;
+    transition: 0.4s ease;
+  }
+
+  .registration-form button:hover {
+    transition: 0.4s ease;
+    background-color: #dd9612;
+    border-radius: 14px;
+    transform: scale(1.05);
+  }

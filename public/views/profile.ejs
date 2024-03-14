@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="/styles/profile.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn-uicons.flaticon.com/2.1.0/uicons-bold-rounded/css/uicons-bold-rounded.css"
+    />
+  </head>
+  <style>
+    .cart-items {
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #e8e8e8;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.841);
+      margin-bottom: 25px;
+      border: 1px solid rgb(201, 201, 201);
+    }
+
+    #cartTable {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    #cartTable th,
+    #cartTable td {
+      padding: 15px;
+      text-align: center;
+      border: solid 0.5px;
+    }
+
+    #cartTable th {
+      background-color: #949494;
+    }
+    #cartTable tr {
+      background-color: rgb(208, 208, 208);
+    }
+    /* #cartTable tbody tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    #cartTable tbody tr:hover {
+      background-color: #f1f1f1;
+    } */
+
+    /* Стили для модального окна */
+    .modal {
+      display: none; /* По умолчанию скрыто */
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgb(0, 0, 0);
+      background-color: rgba(0, 0, 0, 0.4);
+      padding-top: 60px; /* Добавим отступ сверху */
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 5% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 30%;
+      border-radius: 15px;
+    }
+
+    /* Закрытие модального окна */
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    /* Стили для формы внутри модального окна */
+    #editProfileForm {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .labelAndInput {
+      margin-bottom: 15px;
+    }
+
+    label {
+      text-align: left;
+      margin-bottom: 5px;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 10px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      transition: 0.4s ease;
+    }
+
+    input:focus,
+    select:focus {
+      outline: none;
+      background-color: #ccc;
+      transform: scale(1.05);
+      transition: 0.4s ease;
+    }
+
+    button {
+      padding: 15px;
+      background-color: #21b125;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: 0.3s;
+      margin-top: 15px;
+    }
+
+    button:hover {
+      border-radius: 15px;
+      background-color: #18741d;
+      transition: 0.3s;
+      transform: scale(0.97);
+    }
+    /* Общие стили, не зависящие от размера экрана */
+
+    /* Для устройств шириной до 600px */
+    @media only screen and (max-width: 600px) {
+      .modal-content {
+        width: 80%;
+      }
+      #topMenu {
+        min-width: 100%;
+      }
+      .fullprofile {
+        display: flex;
+        flex-direction: column;
+        font-size: small;
+      }
+      .profile {
+        width: 80%;
+        margin-left: 35px;
+      }
+
+      .profile img {
+        width: 90px;
+        height: 90px;
+      }
+
+      /* .cart-items{
+        
+      }
+      #cartTable  {
+        
+      }  */
+
+      #editProfileForm {
+        width: 80%;
+      }
+      .delivery-info {
+        width: 80%;
+        margin-left: 35px;
+      }
+
+      button {
+        padding: 10px;
+        margin-top: 10px;
+      }
+    }
+
+    /* Для устройств шириной от 601px до 900px */
+    @media only screen and (min-width: 601px) and (max-width: 900px) {
+      .modal-content {
+        width: 60%;
+      }
+
+      #cartTable th,
+      #cartTable td {
+        padding: 12px;
+      }
+
+      #editProfileForm {
+        width: 70%;
+      }
+      .delivery-info {
+        margin-left: 10px;
+      }
+
+      button {
+        padding: 12px;
+        margin-top: 12px;
+      }
+    }
+
+    /* Для устройств шириной от 901px и более */
+    @media only screen and (min-width: 901px) {
+      .modal-content {
+        width: 30%;
+      }
+
+      #cartTable th,
+      #cartTable td {
+        padding: 15px;
+      }
+
+      #editProfileForm {
+        width: 40%;
+      }
+
+      button {
+        padding: 15px;
+        margin-top: 15px;
+      }
+    }
+  </style>
+  <body>
+    <div id="topMenu">
+      <div>
+        <a href="mainpage">Главная</a>
+        <a href="catalog">Каталог</a>
+      </div> 
+      <div class="admin-only" style="display: none;">
+        <a href="top10Robots">Отчет Топ 10</a>
+        <a href="sellsReportTipe">Отчет объем продаж</a>
+      </div>
+      <a href="profile">Профиль</a>
+    </div>
+    <div class="fullprofile">
+      <div class="profile">
+        <img src="/photo/profilephoto.png" alt="User Image" />
+        <div class="info">
+          <a
+            class="editbutton"
+            title="Редактировать профиль"
+            href="#"
+            id="openEditModal"
+            ><i class="far fa-edit"></i
+          ></a>
+          <div class="information">
+            <strong>Логин:</strong>
+            <span id="login"></span>
+          </div>
+          <div class="information">
+            <strong>Email:</strong>
+            <span id="email"></span>
+          </div>
+          <div class="information">
+            <strong>Номер телефона: +</strong>
+            <span id="phoneNumber"></span>
+          </div>
+          <a href="#" id="logoutButton" class="exitButton">Выйти из профиля</a>
+        </div>
+      </div>
+
+      <div class="delivery-info">
+        <div>
+          <i class="fi fi-br-plus"></i>
+          <i class="far fa-edit"></i>
+        </div>
+        <h2>Информация о месте заказа</h2>
+
+        <div class="delivery-details">
+          <strong>Улица:</strong>
+          <span id="city"></span>
+        </div>
+
+        <div class="delivery-details">
+          <strong>Номер дома:</strong>
+          <span id="address"></span>
+        </div>
+
+        <div class="delivery-details">
+          <strong>Имя заказчика:</strong>
+          <span id="postalCode"></span>
+        </div>
+      </div>
+    </div>
+    <div class="cart-items">
+      <h2>Товары в корзине</h2>
+      <table id="cartTable">
+        <thead>
+          <tr>
+            <th>Наименование товара</th>
+            <th>Количество</th>
+            <th>Цена за единицу</th>
+            <th>Общая стоимость</th>
+          </tr>
+        </thead>
+        <tbody id="cartItemList"></tbody>
+      </table>
+    </div>
+    <div style="height: 10px; color: rgb(255, 255, 255)">____</div>
+    <div class="id">
+      <strong>Id:</strong>
+      <span id="userId"></span>
+    </div>
+
+    <div id="editProfileModal" class="modal">
+      <div class="modal-content">
+        <span class="close" id="closeEditModal">&times;</span>
+        <form id="editProfileForm">
+          <div class="labelAndInput">
+            <label for="editLogin">Логин:</label>
+            <input type="text" id="editLogin" name="editLogin" required />
+          </div>
+          <div class="labelAndInput">
+            <label for="editEmail">Email:</label>
+            <input type="email" id="editEmail" name="editEmail" required />
+          </div>
+          <div class="labelAndInput">
+            <label for="editPhoneNumber">Номер телефона:</label>
+            <input
+              type="tel"
+              id="editPhoneNumber"
+              name="editPhoneNumber"
+              required
+            />
+          </div>
+          <!-- Добавьте другие поля для редактирования -->
+
+          <button type="submit">Сохранить изменения</button>
+        </form>
+      </div>
+    </div>
+    <!-- <script src="/scripts/profile.js"></script> -->
+    <script>
+
+document.addEventListener("DOMContentLoaded", () => {
+        const storedToken = localStorage.getItem("token");
+
+        if (storedToken) {
+          console.log("Токен:", storedToken);
+
+          // Раскодируем токен, чтобы получить данные пользователя
+          try {
+            const decodedToken = JSON.parse(atob(storedToken.split(".")[1]));
+            if (decodedToken && decodedToken.login === "admin") {
+              const adminOnlyLinks = document.querySelectorAll(".admin-only");
+              adminOnlyLinks.forEach((link) => {
+                link.style.display = "block";
+                link.addEventListener("click", openModal);
+              });
+
+              // Закрытие модального окна при клике на крестик
+              const closeButton = document.querySelector(".close");
+              closeButton.addEventListener("click", closeModal);
+            }
+          } catch (error) {
+            console.error("Ошибка при декодировании токена:", error);
+          }
+        } else {
+          console.log("Токен не найден в локальном хранилище.");
+        }
+      });
+
+      // Получаем ссылки на элементы кнопки и модального окна
+      const openEditModalButton = document.getElementById("openEditModal");
+      const editProfileModal = document.getElementById("editProfileModal");
+      const closeEditModalButton = document.getElementById("closeEditModal");
+
+      // Обработчик для открытия модального окна
+      openEditModalButton.addEventListener("click", function () {
+        editProfileModal.style.display = "block";
+      });
+
+      // Обработчик для закрытия модального окна
+      closeEditModalButton.addEventListener("click", function () {
+        editProfileModal.style.display = "none";
+      });
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        try {
+          // Получение данных о пользователе
+          const userResponse = await fetch("/profile", {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          });
+
+          if (userResponse.ok) {
+            const userData = await userResponse.json();
+
+            if (userData) {
+              // Сохраняем ID пользователя в localStorage
+              localStorage.setItem("activeUserId", userData.user_id);
+
+              // Выводим ID пользователя в консоль
+              console.log("ID пользователя:", userData.user_id);
+
+              document.getElementById("userId").textContent =
+                userData.user_id || "Нет данных";
+
+              document.getElementById("login").textContent =
+                userData.login || "Нет данных";
+              document.getElementById("email").textContent =
+                userData.email || "Нет данных";
+              document.getElementById("phoneNumber").textContent =
+                userData.phone_number || "Нет данных";
+            } else {
+              console.error("Ошибка: Данные пользователя не получены.");
+            }
+          } else {
+            console.error(
+              "Ошибка при получении данных пользователя:",
+              userResponse.status
+            );
+          }
+
+          // Получение данных о месте заказа
+          const deliveryResponse = await fetch("/deliveryPlaces", {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          });
+
+          if (deliveryResponse.ok) {
+            const deliveryData = await deliveryResponse.json();
+
+            if (deliveryData) {
+              document.getElementById("city").textContent =
+                deliveryData.street_name || "Нет данных";
+              document.getElementById("address").textContent =
+                deliveryData.house_number || "Нет данных";
+              document.getElementById("postalCode").textContent =
+                deliveryData.UserName || "Нет данных";
+            } else {
+              console.error("Ошибка: Данные о месте заказа не получены.");
+            }
+          } else {
+            console.error(
+              "Ошибка при получении данных о месте заказа:",
+              deliveryResponse.status
+            );
+          }
+        } catch (error) {
+          console.error("Ошибка при отправке запросов на сервер:", error);
+        }
+
+        // Обработчик для кнопки "Выйти из профиля"
+        const logoutButton = document.querySelector("#logoutButton");
+
+        if (logoutButton) {
+          logoutButton.addEventListener("click", () => {
+            // Удаление токена из локального хранилища
+            localStorage.clear();
+
+            // Перенаправление пользователя на страницу выхода
+            window.location.href = "/authorization"; // Замените "/logout" на реальный URL для выхода
+          });
+        }
+
+        editProfileForm.addEventListener("submit", async (event) => {
+          event.preventDefault();
+
+          // Отключаем кнопку во время отправки запроса
+          const submitButton = document.querySelector(
+            "#editProfileForm button"
+          );
+          submitButton.disabled = true;
+
+          // Получаем значения из полей формы
+          const formData = new FormData(
+            document.getElementById("editProfileForm")
+          );
+
+          // Преобразуем FormData в объект
+          const formDataObject = {};
+          formData.forEach((value, key) => {
+            formDataObject[key] = value;
+          });
+          console.log(formDataObject);
+
+          // Отправляем запрос на сервер для обновления данных пользователя
+          try {
+            const userId = localStorage.getItem("activeUserId");
+            const response = await fetch(`/updateUserProfile/${userId}`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+              body: JSON.stringify(formDataObject),
+            });
+
+            if (response.ok) {
+              console.log("Данные профиля успешно обновлены.");
+              setTimeout("window.location.reload()", 100);
+
+              // Закрываем модальное окно после успешного обновления
+              closeEditModal();
+
+              // Обновляем данные на странице без перезагрузки
+              const userResponse = await fetch(`/getUserProfile/${userId}`, {
+                method: "GET",
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+              });
+
+              if (userResponse.ok) {
+                const userData = await userResponse.json();
+
+                // Обновляем данные на странице
+                document.getElementById("login").textContent =
+                  userData.login || "";
+                document.getElementById("email").textContent =
+                  userData.email || "";
+                document.getElementById("phoneNumber").textContent =
+                  userData.phone_number || "";
+              } else {
+                console.error(
+                  "Ошибка при получении данных пользователя:",
+                  userResponse.status
+                );
+              }
+            } else {
+              console.error(
+                "Ошибка при обновлении данных профиля:",
+                response.status
+              );
+            }
+          } catch (error) {
+            console.error("Ошибка при отправке запроса на сервер:", error);
+          } finally {
+            // Включаем кнопку после завершения запроса (даже в случае ошибки)
+            submitButton.disabled = false;
+          }
+        });
+      });
+
+      // Фронтенд
+      document.addEventListener("DOMContentLoaded", async () => {
+        try {
+          // Получение данных о товарах в корзине пользователя
+
+          const userId = localStorage.getItem("activeUserId");
+          console.log(userId);
+
+          if (!userId) {
+            console.error("Id пользователя не найден.");
+            return;
+          }
+
+          const cartResponse = await fetch(`/shoppingCart?userId=${userId}`, {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          });
+
+          if (cartResponse.ok) {
+            const cartItems = await cartResponse.json();
+
+            if (cartItems.length > 0) {
+              const cartItemList = document.getElementById("cartItemList");
+
+              cartItems.forEach((item) => {
+                const tableRow = document.createElement("tr");
+                tableRow.innerHTML = `
+                        <td>${item.model_name}</td>
+                        <td>${item.quantity} Шт.</td>
+                        <td>${item.model_price} Руб.</td>
+                        <td>${item.total_price} Руб.</td>
+                    `;
+                cartItemList.appendChild(tableRow);
+              });
+            } else {
+              console.log("Корзина пуста.");
+            }
+          } else {
+            console.error(
+              "Ошибка при получении данных о товарах в корзине:",
+              cartResponse.status
+            );
+          }
+        } catch (error) {
+          console.error("Ошибка при отправке запроса на сервер:", error);
+        }
+      });
+    </script>
+  </body>
+</html>

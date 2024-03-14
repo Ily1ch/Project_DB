@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="/styles/registration.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Регистрация</title>
+  </head>
+  <body>
+    <div class="registration-form">
+      <h2>Регистрация</h2>
+      <form id="registrationForm" method="post" action="/addUser">  
+          <label for="login">Логин:</label>
+          <input type="text" id="login" name="login" placeholder="Введите логин" required />
+          <label for="email">Почта:</label>
+          <input type="email" id="email" name="email" placeholder="Введите свою электронную почту" required />
+          <label for="name">Имя:</label>
+          <input type="text" id="name" name="name" placeholder="Введите имя" required />
+          <label for="phone">Телефон:</label>
+          <input type="tel" id="phone" name="phone" placeholder="Введите свой номер телефона" required />
+          <label for="password">Пароль:</label>
+          <input type="password" id="password" name="password" placeholder="Придумайте надежный пароль" required />
+        <button type="submit" >Зарегистрироваться</button>
+        <a href="authorization">Вы уже зарегестрированы?</a>
+      </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+      // JavaScript-код для отправки POST-запроса на сервер при регистрации
+      const handleRegistrationForm = async () => {
+        $(document).ready(function () {
+          $("#registrationForm").submit(async function (event) {
+            event.preventDefault(); // предотвращаем стандартное поведение формы
+
+            // Собираем данные из формы
+            const formData = {
+              login: $("#login").val(),
+              email: $("#email").val(),
+              full_name: $("#name").val(),
+              phone_number: $("#phone").val(),
+              password: $("#password").val(),
+            };
+            console.log(formData);
+            // Отправляем данные на сервер
+            try {
+              const response = await fetch("http://localhost:3000/addUser", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+              });
+
+              // Обработка успешного ответа от сервера
+              if (response.ok) {
+                const data = await response.json();
+                console.log("Успешная регистрация:", data);
+              } else {
+                // Обработка ошибок
+                console.error("Ошибка регистрации:", response.statusText);
+              }
+            } catch (error) {
+              console.error("Ошибка при отправке запроса на сервер:", error);
+            }
+          });
+        });
+      };
+
+      // Вызов функции при загрузке страницы
+      document.addEventListener("DOMContentLoaded", handleRegistrationForm);
+    </script>
+  </body>
+</html>

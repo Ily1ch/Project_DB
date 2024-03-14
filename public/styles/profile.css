@@ -1,0 +1,103 @@
+body {
+    font-family: "Nunito", sans-serif;
+    background-color: #ffffff;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    overflow-x: hidden;
+    flex: 1;
+    width: 100%;
+  }
+
+#topMenu {
+    background-color: #333;
+    width: 100%;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    position:sticky;
+    justify-content: space-between; /* Распределение пространства между элементами */
+    align-items: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.94);
+  }
+
+  #topMenu a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    margin: 0 10px; /* Добавлено расстояние между пунктами меню */
+  }
+
+  .profile {
+    display: flex;
+    border: 1px solid rgb(201, 201, 201);
+    background-color: #e8e8e8;
+    border-radius: 5px;
+    padding: 1em;
+    margin-bottom: 20px;
+    transition: 0.3s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.841);
+    justify-content: space-between;
+    align-items: flex-start; /* Положение контента по верхнему краю */
+    width: 60%;
+    
+  }
+
+  .profile img {
+    max-width: 150px;
+    margin-right: 20px;
+  }
+
+  .id {
+    display: flex;
+    position: fixed;
+    margin-right: 20px;
+    bottom: 0;
+    right: 0;
+    color: rgb(175, 175, 175);
+  }
+  .delivery-info {
+    margin-left: 5%;
+    border: 1px solid rgb(201, 201, 201);
+    background-color: #e8e8e8;
+    border-radius: 5px;
+    padding: 1em;
+    margin-bottom: 20px;
+    transition: 0.3s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.841);
+    justify-content: space-between;
+    align-items: flex-start; /* Положение контента по верхнему краю */
+    
+    
+  }
+  .delivery-info h2{
+    margin: 0px;
+  }
+
+  .fullprofile{
+    display: flex;
+    flex-direction: row;
+    margin-top: 4%;
+
+  }
+  .info {
+    display: flex;
+    flex-direction: column;
+    padding: 0px;
+  }
+  .information {
+    margin-bottom: 5px;
+  }
+
+  .editbutton {
+    text-decoration: none;
+    color: rgba(0, 0, 0);
+    margin: 0;
+    align-self: flex-end;
+  }
+  .exitButton{
+    text-decoration: none;
+    color: red;
+  }

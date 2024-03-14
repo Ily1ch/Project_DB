@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>Sales Report</title>
+    <style>
+      body {
+        font-family: "Nunito", sans-serif;
+        background-color: #ffffff;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh; /* Заменено height на min-height */
+        overflow-x: hidden;
+      }
+
+      table {
+        border-collapse: collapse;
+        width: 50%;
+        margin-top: 20px;
+      }
+
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+
+      th {
+        background-color: #f2f2f2;
+      }
+      .btn {
+        margin-top: 15px;
+        padding: 10px;
+        border-radius: 10px;
+        border: none;
+        transition: 0.3s;
+        background-color: #3acd27;
+        color: #ffffff;
+        font-size: medium;
+        font-weight: bold;
+      }
+      .btn:hover {
+        transition: 0.3s;
+        transform: scale(1.05);
+        background-color: #289319;
+      }
+
+      #topMenu {
+        background-color: #333;
+        width: 100%;
+        padding: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      #topMenu a {
+        color: white;
+        text-decoration: none;
+        font-size: 18px;
+        margin: 0 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="topMenu">
+      <div>
+        <a href="mainpage">Главная</a>
+        <a href="catalog">Каталог</a>
+      </div>
+      <div class="admin-only" style="display: none;">
+        <a href="top10Robots">Отчет Топ 10</a>
+        <a href="sellsReportTipe">Отчет объем продаж</a>
+      </div>
+      <a href="profile">Профиль</a>
+    </div>
+    <h1>Отчет продаж</h1>
+    <div>
+      <label for="typeId">Выберите тип пылесоса:</label>
+      <select id="typeId"></select>
+      <button class="btn" onclick="getSalesReport()">Составить отчет</button>
+    </div>
+    <table id="salesReportTable">
+      <thead>
+        <tr>
+          <th>Тип пылесоса</th>
+          <th>Всего продаж</th>
+          <th>Сумма</th>
+        </tr>
+      </thead>
+      <tbody id="salesReportList"></tbody>
+    </table>
+
+    <script>
+
+document.addEventListener("DOMContentLoaded", () => {
+        const storedToken = localStorage.getItem("token");
+
+        if (storedToken) {
+          console.log("Токен:", storedToken);
+
+          // Раскодируем токен, чтобы получить данные пользователя
+          try {
+            const decodedToken = JSON.parse(atob(storedToken.split(".")[1]));
+            if (decodedToken && decodedToken.login === "admin") {
+              const adminOnlyLinks = document.querySelectorAll(".admin-only");
+              adminOnlyLinks.forEach((link) => {
+                link.style.display = "block";
+                link.addEventListener("click", openModal);
+              });
+
+              // Закрытие модального окна при клике на крестик
+              const closeButton = document.querySelector(".close");
+              closeButton.addEventListener("click", closeModal);
+            }
+          } catch (error) {
+            console.error("Ошибка при декодировании токена:", error);
+          }
+        } else {
+          console.log("Токен не найден в локальном хранилище.");
+        }
+      });
+      // Функция для заполнения выпадающего списка типов пылесосов
+      function fillVacuumTypes() {
+        const typeIdSelect = document.getElementById("typeId");
+
+        fetch("/getVacuumTypes")
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(
+                `Network response was not ok: ${response.statusText}`
+              );
+            }
+            return response.json();
+          })
+          .then((data) => {
+            // Очистка текущих элементов в списке
+            typeIdSelect.innerHTML = "";
+
+            // Заполнение списка новыми элементами
+            data.forEach((type) => {
+              const option = document.createElement("option");
+              option.value = type.type_id;
+              option.textContent = type.type_name;
+              typeIdSelect.appendChild(option);
+            });
+          })
+          .catch((error) => console.error("Error:", error.message));
+      }
+
+      // Вызывается при загрузке страницы для заполнения списка типов
+      document.addEventListener("DOMContentLoaded", fillVacuumTypes);
+      function getSalesReport() {
+        const typeId = document.getElementById("typeId").value;
+
+        fetch(`/salesReport/${typeId}`)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(
+                `Network response was not ok: ${response.statusText}`
+              );
+            }
+            return response.json();
+          })
+          .then((data) => displaySalesReport(data))
+          .catch((error) => console.error("Error:", error.message));
+      }
+
+      function displaySalesReport(salesData) {
+        const salesReportList = document.getElementById("salesReportList");
+        salesReportList.innerHTML = "";
+
+        salesData.forEach((sale) => {
+          const row = salesReportList.insertRow();
+
+          const cellNames = ["VacuumType", "TotalSales", "TotalRevenue"];
+
+          cellNames.forEach((cellName) => {
+            const cell = row.insertCell();
+            cell.textContent = sale[cellName];
+          });
+        });
+      }
+    </script>
+  </body>
+</html>
